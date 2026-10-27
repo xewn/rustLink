@@ -1,0 +1,8 @@
+target
+.venv
+.git
+logs
+config.json*
+artifacts
+dist
+**/__pycache__

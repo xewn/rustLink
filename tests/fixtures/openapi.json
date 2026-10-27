@@ -1,0 +1,1221 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "工业数据采集网关",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "健康检查",
+        "operationId": "health_check_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/config": {
+      "get": {
+        "summary": "Get Config",
+        "description": "获取完整配置",
+        "operationId": "get_config_api_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Config",
+        "description": "更新完整配置并保存",
+        "operationId": "update_config_api_config_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GatewayConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/config/reload": {
+      "post": {
+        "summary": "Reload Config",
+        "description": "重新加载配置（从文件读取）",
+        "operationId": "reload_config_api_config_reload_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/config/apply": {
+      "post": {
+        "summary": "Apply Config",
+        "description": "应用配置（保存并重启采集）",
+        "operationId": "apply_config_api_config_apply_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices": {
+      "get": {
+        "summary": "Get Devices",
+        "description": "获取设备列表",
+        "operationId": "get_devices_api_devices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add Device",
+        "description": "添加设备",
+        "operationId": "add_device_api_devices_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices/{device_id}": {
+      "put": {
+        "summary": "Update Device",
+        "description": "更新设备",
+        "operationId": "update_device_api_devices__device_id__put",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Device",
+        "description": "删除设备",
+        "operationId": "delete_device_api_devices__device_id__delete",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices/test": {
+      "post": {
+        "summary": "Test Connection",
+        "description": "测试设备连接",
+        "operationId": "test_connection_api_devices_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestConnectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collect/start": {
+      "post": {
+        "summary": "Api Start Collect",
+        "description": "启动采集",
+        "operationId": "api_start_collect_api_collect_start_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collect/stop": {
+      "post": {
+        "summary": "Api Stop Collect",
+        "description": "停止采集",
+        "operationId": "api_stop_collect_api_collect_stop_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collect/status": {
+      "get": {
+        "summary": "Get Collect Status",
+        "description": "获取采集状态",
+        "operationId": "get_collect_status_api_collect_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/mqtt": {
+      "get": {
+        "summary": "Get Mqtt Config",
+        "description": "获取MQTT配置",
+        "operationId": "get_mqtt_config_api_mqtt_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Mqtt Config",
+        "description": "更新MQTT配置",
+        "operationId": "update_mqtt_config_api_mqtt_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MqttConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logs": {
+      "get": {
+        "summary": "Get Logs",
+        "description": "获取日志",
+        "operationId": "get_logs_api_logs_get",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Level"
+            }
+          },
+          {
+            "name": "lines",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 200,
+              "title": "Lines"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logs/level": {
+      "post": {
+        "summary": "Set Log Level",
+        "description": "设置日志级别",
+        "operationId": "set_log_level_api_logs_level_post",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "INFO",
+              "title": "Level"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices/import-excel": {
+      "post": {
+        "summary": "Import Excel",
+        "description": "导入Excel点位表，解析并返回点位列表",
+        "operationId": "import_excel_api_devices_import_excel_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_import_excel_api_devices_import_excel_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ai/config": {
+      "get": {
+        "summary": "Get Ai Config",
+        "description": "获取AI配置",
+        "operationId": "get_ai_config_api_ai_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Ai Config",
+        "description": "更新AI配置",
+        "operationId": "update_ai_config_api_ai_config_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ai/parse": {
+      "post": {
+        "summary": "Ai Parse Config",
+        "description": "AI解析自然语言为设备配置",
+        "operationId": "ai_parse_config_api_ai_parse_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIParseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ai/parse-stream": {
+      "post": {
+        "summary": "Ai Parse Config Stream",
+        "description": "AI解析自然语言为设备配置（SSE流式输出）",
+        "operationId": "ai_parse_config_stream_api_ai_parse_stream_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIParseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/autostart": {
+      "post": {
+        "summary": "Set Autostart",
+        "description": "设置开机自启动",
+        "operationId": "set_autostart_api_system_autostart_post",
+        "parameters": [
+          {
+            "name": "enabled",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Enabled"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Autostart",
+        "description": "检查开机自启动状态",
+        "operationId": "get_autostart_api_system_autostart_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AIConfig": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "description": "是否启用AI助手",
+            "default": false
+          },
+          "api_url": {
+            "type": "string",
+            "title": "Api Url",
+            "description": "AI API地址",
+            "default": "https://api.openai.com/v1"
+          },
+          "api_key": {
+            "type": "string",
+            "title": "Api Key",
+            "description": "AI API Key",
+            "default": ""
+          },
+          "model": {
+            "type": "string",
+            "title": "Model",
+            "description": "模型名称",
+            "default": "gpt-3.5-turbo"
+          }
+        },
+        "type": "object",
+        "title": "AIConfig",
+        "description": "AI配置"
+      },
+      "AIParseRequest": {
+        "properties": {
+          "input": {
+            "type": "string",
+            "title": "Input",
+            "description": "用户的自然语言描述"
+          },
+          "api_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Api Url",
+            "description": "AI API地址"
+          },
+          "api_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Api Key",
+            "description": "AI API Key"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model",
+            "description": "模型名称"
+          }
+        },
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "title": "AIParseRequest",
+        "description": "AI解析请求"
+      },
+      "Body_import_excel_api_devices_import_excel_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_import_excel_api_devices_import_excel_post"
+      },
+      "DeviceConfig": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "设备ID"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "设备名称"
+          },
+          "protocol": {
+            "type": "string",
+            "title": "Protocol",
+            "description": "协议类型: modbus_tcp/modbus_rtu/s7/mitsubishi"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "description": "是否启用",
+            "default": true
+          },
+          "ip": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ip",
+            "description": "IP地址"
+          },
+          "port": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Port",
+            "description": "端口号(TCP)或串口号(RTU)"
+          },
+          "com_port": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Com Port",
+            "description": "串口号"
+          },
+          "baudrate": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baudrate",
+            "description": "波特率"
+          },
+          "parity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parity",
+            "description": "校验位",
+            "default": "N"
+          },
+          "databits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Databits",
+            "description": "数据位",
+            "default": 8
+          },
+          "stopbits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stopbits",
+            "description": "停止位",
+            "default": 1
+          },
+          "slave_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slave Id",
+            "description": "从站ID",
+            "default": 1
+          },
+          "rack": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rack",
+            "description": "机架号",
+            "default": 0
+          },
+          "slot": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slot",
+            "description": "插槽号",
+            "default": 1
+          },
+          "plc_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plc Type",
+            "description": "PLC型号"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/PointConfig"
+            },
+            "type": "array",
+            "title": "Points",
+            "description": "点位列表"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "protocol"
+        ],
+        "title": "DeviceConfig",
+        "description": "设备配置"
+      },
+      "GatewayConfig": {
+        "properties": {
+          "gateway_name": {
+            "type": "string",
+            "title": "Gateway Name",
+            "description": "网关名称",
+            "default": "默认网关"
+          },
+          "devices": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceConfig"
+            },
+            "type": "array",
+            "title": "Devices",
+            "description": "设备列表"
+          },
+          "mqtt": {
+            "$ref": "#/components/schemas/MqttConfig"
+          },
+          "collect_interval": {
+            "type": "integer",
+            "title": "Collect Interval",
+            "description": "采集间隔（毫秒）",
+            "default": 1000
+          },
+          "reconnect": {
+            "$ref": "#/components/schemas/ReconnectConfig"
+          }
+        },
+        "type": "object",
+        "title": "GatewayConfig",
+        "description": "网关完整配置"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MqttConfig": {
+        "properties": {
+          "host": {
+            "type": "string",
+            "title": "Host",
+            "description": "MQTT服务器地址",
+            "default": ""
+          },
+          "port": {
+            "type": "integer",
+            "title": "Port",
+            "description": "MQTT端口",
+            "default": 1883
+          },
+          "client_id": {
+            "type": "string",
+            "title": "Client Id",
+            "description": "客户端ID",
+            "default": "gateway-001"
+          },
+          "topic_prefix": {
+            "type": "string",
+            "title": "Topic Prefix",
+            "description": "Topic前缀",
+            "default": "factory/data"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username",
+            "description": "用户名",
+            "default": ""
+          },
+          "password": {
+            "type": "string",
+            "title": "Password",
+            "description": "密码",
+            "default": ""
+          },
+          "qos": {
+            "type": "integer",
+            "title": "Qos",
+            "description": "QoS级别",
+            "default": 1
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "description": "是否启用",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "MqttConfig",
+        "description": "MQTT配置"
+      },
+      "PointConfig": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "点位名称"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address",
+            "description": "点位地址"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "数据类型",
+            "default": "float"
+          },
+          "rate": {
+            "type": "number",
+            "title": "Rate",
+            "description": "倍率",
+            "default": 1.0
+          },
+          "offset": {
+            "type": "number",
+            "title": "Offset",
+            "description": "偏移量",
+            "default": 0.0
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit",
+            "description": "单位",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "address"
+        ],
+        "title": "PointConfig",
+        "description": "点位配置"
+      },
+      "ReconnectConfig": {
+        "properties": {
+          "max_retries": {
+            "type": "integer",
+            "title": "Max Retries",
+            "description": "最大重试次数，0=无限",
+            "default": 0
+          },
+          "base_delay": {
+            "type": "integer",
+            "title": "Base Delay",
+            "description": "基础延迟（秒）",
+            "default": 1
+          },
+          "max_delay": {
+            "type": "integer",
+            "title": "Max Delay",
+            "description": "最大延迟（秒）",
+            "default": 60
+          }
+        },
+        "type": "object",
+        "title": "ReconnectConfig",
+        "description": "重连配置"
+      },
+      "TestConnectionRequest": {
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/DeviceConfig"
+          }
+        },
+        "type": "object",
+        "required": [
+          "device"
+        ],
+        "title": "TestConnectionRequest",
+        "description": "测试连接请求"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

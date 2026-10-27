@@ -1,0 +1,565 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/health",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "网关运行中",
+      "data": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/config",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "gateway_name": "默认网关",
+        "devices": [],
+        "mqtt": {
+          "host": "",
+          "port": 1883,
+          "client_id": "gateway-001",
+          "topic_prefix": "factory/data",
+          "username": "",
+          "password": "",
+          "qos": 1,
+          "enabled": false
+        },
+        "collect_interval": 1000,
+        "reconnect": {
+          "max_retries": 0,
+          "base_delay": 1,
+          "max_delay": 60
+        },
+        "ai": {
+          "enabled": false,
+          "api_url": "https://api.openai.com/v1",
+          "api_key": "",
+          "model": "gpt-3.5-turbo"
+        }
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/devices",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": []
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/mqtt",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "host": "",
+        "port": 1883,
+        "client_id": "gateway-001",
+        "topic_prefix": "factory/data",
+        "username": "",
+        "password": "",
+        "qos": 1,
+        "enabled": false
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/ai/config",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "enabled": false,
+        "api_url": "https://api.openai.com/v1",
+        "api_key": "",
+        "model": "gpt-3.5-turbo"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/collect/status",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "running": false,
+        "devices": [],
+        "mqtt_connected": false
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/devices",
+    "body": {
+      "id": "d1",
+      "name": "温度计",
+      "protocol": "modbus_tcp",
+      "points": [
+        {
+          "name": "温度",
+          "address": "40001"
+        }
+      ]
+    },
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "设备已添加",
+      "data": {
+        "id": "d1",
+        "name": "温度计",
+        "protocol": "modbus_tcp",
+        "enabled": true,
+        "ip": null,
+        "port": null,
+        "com_port": null,
+        "baudrate": null,
+        "parity": "N",
+        "databits": 8,
+        "stopbits": 1,
+        "slave_id": 1,
+        "rack": 0,
+        "slot": 1,
+        "plc_type": null,
+        "points": [
+          {
+            "name": "温度",
+            "address": "40001",
+            "type": "float",
+            "rate": 1.0,
+            "offset": 0.0,
+            "unit": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/devices",
+    "body": {
+      "id": "rtu",
+      "name": "串口",
+      "protocol": "modbus_rtu",
+      "port": "COM9",
+      "parity": null
+    },
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "设备已添加",
+      "data": {
+        "id": "rtu",
+        "name": "串口",
+        "protocol": "modbus_rtu",
+        "enabled": true,
+        "ip": null,
+        "port": "COM9",
+        "com_port": null,
+        "baudrate": null,
+        "parity": null,
+        "databits": 8,
+        "stopbits": 1,
+        "slave_id": 1,
+        "rack": 0,
+        "slot": 1,
+        "plc_type": null,
+        "points": []
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/devices",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": [
+        {
+          "id": "d1",
+          "name": "温度计",
+          "protocol": "modbus_tcp",
+          "enabled": true,
+          "ip": null,
+          "port": null,
+          "com_port": null,
+          "baudrate": null,
+          "parity": "N",
+          "databits": 8,
+          "stopbits": 1,
+          "slave_id": 1,
+          "rack": 0,
+          "slot": 1,
+          "plc_type": null,
+          "points": [
+            {
+              "name": "温度",
+              "address": "40001",
+              "type": "float",
+              "rate": 1.0,
+              "offset": 0.0,
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "id": "rtu",
+          "name": "串口",
+          "protocol": "modbus_rtu",
+          "enabled": true,
+          "ip": null,
+          "port": "COM9",
+          "com_port": null,
+          "baudrate": null,
+          "parity": null,
+          "databits": 8,
+          "stopbits": 1,
+          "slave_id": 1,
+          "rack": 0,
+          "slot": 1,
+          "plc_type": null,
+          "points": []
+        }
+      ]
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/devices/d1",
+    "body": {
+      "id": "ignored",
+      "name": "改名",
+      "protocol": "s7"
+    },
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "设备已更新",
+      "data": null
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/devices/missing",
+    "body": {
+      "id": "x",
+      "name": "missing",
+      "protocol": "s7"
+    },
+    "status": 200,
+    "expected": {
+      "success": false,
+      "message": "设备不存在",
+      "data": null
+    }
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/devices/missing",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": false,
+      "message": "设备不存在",
+      "data": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/devices",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": [
+        {
+          "id": "d1",
+          "name": "改名",
+          "protocol": "s7",
+          "enabled": true,
+          "ip": null,
+          "port": null,
+          "com_port": null,
+          "baudrate": null,
+          "parity": "N",
+          "databits": 8,
+          "stopbits": 1,
+          "slave_id": 1,
+          "rack": 0,
+          "slot": 1,
+          "plc_type": null,
+          "points": []
+        },
+        {
+          "id": "rtu",
+          "name": "串口",
+          "protocol": "modbus_rtu",
+          "enabled": true,
+          "ip": null,
+          "port": "COM9",
+          "com_port": null,
+          "baudrate": null,
+          "parity": null,
+          "databits": 8,
+          "stopbits": 1,
+          "slave_id": 1,
+          "rack": 0,
+          "slot": 1,
+          "plc_type": null,
+          "points": []
+        }
+      ]
+    }
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/devices/rtu",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "设备已删除",
+      "data": null
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/devices/test",
+    "body": {
+      "device": {
+        "id": "x",
+        "name": "x",
+        "protocol": "unknown"
+      }
+    },
+    "status": 200,
+    "expected": {
+      "success": false,
+      "message": "不支持的协议: unknown",
+      "elapsed_ms": 0
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/mqtt",
+    "body": {
+      "host": "localhost",
+      "enabled": false
+    },
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "MQTT配置已保存",
+      "data": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/mqtt",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "host": "localhost",
+        "port": 1883,
+        "client_id": "gateway-001",
+        "topic_prefix": "factory/data",
+        "username": "",
+        "password": "",
+        "qos": 1,
+        "enabled": false
+      }
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/ai/config",
+    "body": {
+      "model": "mock-model"
+    },
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "AI配置已保存",
+      "data": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/ai/config",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "enabled": false,
+        "api_url": "https://api.openai.com/v1",
+        "api_key": "",
+        "model": "mock-model"
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/ai/parse",
+    "body": {
+      "input": "西门子PLC"
+    },
+    "status": 200,
+    "expected": {
+      "success": false,
+      "message": "请先在系统设置中配置AI API Key",
+      "data": null
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/config",
+    "body": {
+      "gateway_name": "新网关",
+      "collect_interval": 50,
+      "unknown": "ignored",
+      "ai": {
+        "enabled": true
+      }
+    },
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "配置已保存",
+      "data": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/config",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "gateway_name": "新网关",
+        "devices": [],
+        "mqtt": {
+          "host": "",
+          "port": 1883,
+          "client_id": "gateway-001",
+          "topic_prefix": "factory/data",
+          "username": "",
+          "password": "",
+          "qos": 1,
+          "enabled": false
+        },
+        "collect_interval": 50,
+        "reconnect": {
+          "max_retries": 0,
+          "base_delay": 1,
+          "max_delay": 60
+        },
+        "ai": {
+          "enabled": false,
+          "api_url": "https://api.openai.com/v1",
+          "api_key": "",
+          "model": "mock-model"
+        }
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/config/reload",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "配置已重新加载",
+      "data": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/config",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "",
+      "data": {
+        "gateway_name": "新网关",
+        "devices": [],
+        "mqtt": {
+          "host": "",
+          "port": 1883,
+          "client_id": "gateway-001",
+          "topic_prefix": "factory/data",
+          "username": "",
+          "password": "",
+          "qos": 1,
+          "enabled": false
+        },
+        "collect_interval": 50,
+        "reconnect": {
+          "max_retries": 0,
+          "base_delay": 1,
+          "max_delay": 60
+        },
+        "ai": {
+          "enabled": false,
+          "api_url": "https://api.openai.com/v1",
+          "api_key": "",
+          "model": "mock-model"
+        }
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/logs/level?level=DEBUG",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "日志级别已设置为 DEBUG",
+      "data": null
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/logs/level?level=weird",
+    "body": null,
+    "status": 200,
+    "expected": {
+      "success": true,
+      "message": "日志级别已设置为 weird",
+      "data": null
+    }
+  }
+]

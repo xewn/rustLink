@@ -1,0 +1,7 @@
+/target/
+/.venv/
+/config.json*
+/logs/
+/artifacts/
+/dist/
+__pycache__/

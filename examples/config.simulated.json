@@ -1,0 +1,12 @@
+{
+  "gateway_name": "模拟车间",
+  "collect_interval": 500,
+  "reconnect": {"max_retries": 0, "base_delay": 1, "max_delay": 10},
+  "mqtt": {"enabled": true, "host": "127.0.0.1", "port": 18830, "client_id": "rustlink-demo", "topic_prefix": "factory/data", "qos": 1},
+  "ai": {"enabled": true, "api_url": "http://127.0.0.1:18080/v1", "api_key": "simulation", "model": "simulated-plc-config"},
+  "devices": [
+    {"id":"modbus-demo","name":"Modbus 温度计","protocol":"modbus_tcp","ip":"127.0.0.1","port":1502,"points":[{"name":"温度","address":"40001","type":"float","unit":"℃"},{"name":"运行","address":"00001","type":"bool"}]},
+    {"id":"s7-demo","name":"西门子 S7 模拟器","protocol":"s7","ip":"127.0.0.1","port":1102,"rack":0,"slot":1,"points":[{"name":"温度","address":"DB1.DBD0","type":"float","unit":"℃"},{"name":"压力","address":"DB1.DBW4","type":"int16","rate":0.1,"unit":"MPa"}]},
+    {"id":"mc-demo","name":"三菱 MC 模拟器","protocol":"mitsubishi","ip":"127.0.0.1","port":15000,"points":[{"name":"温度","address":"D100","type":"float","unit":"℃"},{"name":"输入","address":"X0","type":"bool"}]}
+  ]
+}

@@ -1,0 +1,115 @@
+[
+  {
+    "file": "points_cn.xlsx",
+    "expected": {
+      "success": true,
+      "message": "成功导入 3 个点位",
+      "data": {
+        "points": [
+          {
+            "name": "温度",
+            "address": "40001",
+            "type": "float",
+            "rate": 0.1,
+            "offset": -2.0,
+            "unit": "℃"
+          },
+          {
+            "name": "开关",
+            "address": "00001",
+            "type": "bool",
+            "rate": 1.0,
+            "offset": 0.0,
+            "unit": ""
+          },
+          {
+            "name": "错误类型",
+            "address": "D10",
+            "type": "float",
+            "rate": 1.0,
+            "offset": 0.0,
+            "unit": "rpm"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "file": "points_en.xlsx",
+    "expected": {
+      "success": true,
+      "message": "成功导入 2 个点位",
+      "data": {
+        "points": [
+          {
+            "name": "A",
+            "address": "40001",
+            "type": "uint16",
+            "rate": 2.0,
+            "offset": 1.0,
+            "unit": "bar"
+          },
+          {
+            "name": "B",
+            "address": "DB1.DBD0",
+            "type": "float",
+            "rate": 1.0,
+            "offset": 0.0,
+            "unit": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "file": "missing_columns.xlsx",
+    "expected": {
+      "success": false,
+      "message": "Excel表头必须包含\"点位名称\"和\"地址\"列",
+      "data": null
+    }
+  },
+  {
+    "file": "empty_rows.xlsx",
+    "expected": {
+      "success": false,
+      "message": "未解析到有效点位数据，请检查Excel格式",
+      "data": null
+    }
+  },
+  {
+    "file": "header_only.xlsx",
+    "expected": {
+      "success": false,
+      "message": "Excel文件至少需要包含表头和一行数据",
+      "data": null
+    }
+  },
+  {
+    "file": "leading_empty_row.xlsx",
+    "expected": {
+      "success": false,
+      "message": "Excel表头必须包含\"点位名称\"和\"地址\"列",
+      "data": null
+    }
+  },
+  {
+    "file": "active_sheet.xlsx",
+    "expected": {
+      "success": true,
+      "message": "成功导入 1 个点位",
+      "data": {
+        "points": [
+          {
+            "name": "active-point",
+            "address": "40001",
+            "type": "float",
+            "rate": 1.0,
+            "offset": 0.0,
+            "unit": ""
+          }
+        ]
+      }
+    }
+  }
+]

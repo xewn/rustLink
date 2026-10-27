@@ -1,0 +1,31 @@
+name: Verify RustLink
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: '1.94.0'
+          targets: wasm32-unknown-unknown
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libudev-dev pkg-config
+      - run: cargo test --locked --workspace
+      - run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - run: cargo fmt --all --check
+      - run: cargo build --locked -p rustlink-web --target wasm32-unknown-unknown --release
+      - run: cargo install wasm-bindgen-cli --version 0.2.129 --locked
+      - run: wasm-bindgen target/wasm32-unknown-unknown/release/rustlink_web.wasm --target web --out-dir web/dist/pkg --no-typescript
+      - run: cargo build --locked -p rustlink
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - run: pip install playwright==1.64.1
+      - run: python -m playwright install --with-deps chromium
+      - run: python tests/ui_e2e.py
